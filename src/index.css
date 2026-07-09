@@ -1,21 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Barlow+Condensed:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Fjalla+One&display=swap');
 @import "tailwindcss";
 
 @theme {
   /* CAMBIA AQUÍ LAS TIPOGRAFÍAS DEL MENÚ (Usa Google Fonts) */
-  --font-sans: "Nunito", "Inter", system-ui, -apple-system, sans-serif;
-  --font-title: "Chewy", sans-serif;   /* Tipografía para Títulos (ej. Chewy, Playfair, etc.) */
-  --font-category: "Fredoka", sans-serif; /* Tipografía para Categorías */
-  --font-dish: "Quicksand", sans-serif;     /* Tipografía para Platos y Precios */
-  --font-slogan: "Quicksand", sans-serif;  /* Tipografía para Eslogans/Marquee (ej. Quicksand) */
+  --font-sans: "Poppins", "Nunito", "Inter", system-ui, -apple-system, sans-serif;
+  --font-title: "Lilita One", sans-serif;   /* Tipografía para Títulos (ej. Chewy, Playfair, etc.) */
+  --font-category: "Lilita One", sans-serif; /* Tipografía para Categorías */
+  --font-dish: "Barlow Condensed", sans-serif;     /* Tipografía para Platos y Precios */
+  --font-slogan: "Poppins", sans-serif;  /* Tipografía para Eslogans/Marquee (ej. Quicksand) */
+  --font-price: "Fjalla One", sans-serif;   /* Tipografía para Precios */
   
   /* CAMBIA AQUÍ LOS COLORES DEL MENÚ (Usa formato HEX) */
-  --color-primary: #E91E63;      /* Color principal de la marca (Fucsia/Magenta) */
-  --color-secondary: #8BC34A;    /* Color de acento/secundario (Verde Kiwi) */
-  --color-dark: #4A148C;         /* Color de texto oscuro principal (Morado Oscuro) */
-  --color-light: #FDF2F8;        /* Color de fondo del body (Rosa Pálido) */
+  --color-primary: #0284c7;      /* Color principal de la marca (Azul océano profundo) */
+  --color-secondary: #ef4444;    /* Color de acento/secundario (Rojo vibrante) */
+  --color-dark: #1e293b;         /* Color de texto oscuro principal (Azul noche casi negro) */
+  --color-light: #f0f9ff;        /* Color de fondo del body (Blanco azulado) */
   
-  --shadow-glass: 0 8px 32px 0 rgba(233, 30, 99, 0.08);
+  --shadow-glass: 0 8px 32px 0 rgba(2, 132, 199, 0.08);
   --glass-bg: rgba(255, 255, 255, 0.95);
   --glass-border: rgba(255, 255, 255, 0.4);
 }

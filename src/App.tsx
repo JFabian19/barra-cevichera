@@ -7,14 +7,14 @@ import { DEFAULT_MENU_DATA } from './data/menuData';
 // ==========================================
 // 📋 CONFIGURACIÓN DE LA PLANTILLA DEL MENÚ
 // ==========================================
-const RESTAURANTE_NAME = "Snack Tutti Frutti";
-const RESTAURANTE_SLOGAN = "Snack y Juguería Tropical";
-const WHATSAPP_NUMBER = "51942661467"; // Reemplaza con tu número de WhatsApp con código de país
+const RESTAURANTE_NAME = "Barra Cevichera D'maga";
+const RESTAURANTE_SLOGAN = "Pescados y Mariscos";
+const WHATSAPP_NUMBER = "51900000000"; // Reemplaza con tu número de WhatsApp con código de país (ej: 51 para Perú)
 const FACEBOOK_URL = "";
-const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Puesto+E16+-+Interior+Mercado+2+-+Tarapoto";
-const LOGO_FOOTER_PATH = "/logo_tutti_frutti.png"; // Reemplaza con la ruta de tu logo en public/
-const BANNER_PATH = "/tropical_banner.png"; // Reemplaza con la ruta de tu banner en public/
-const MARQUEE_TEXT = "🍓 JUGOS FRESCOS Y NATURALES • 🌴 SABOR TROPICAL DESDE TARAPOTO • ¡PRUEBA NUESTROS ANTOJITOS DE LA SELVA! 🍍🍹 • ";
+const MAPS_URL = "";
+const LOGO_FOOTER_PATH = "/logo.jpeg";
+const BANNER_PATH = "/hero_banner.png";
+const MARQUEE_TEXT = "🌊 SABOR A MAR DIRECTO A TU MESA • PESCADOS Y MARISCOS FRESCOS • ¡PIDE TU CEVICHE HOY! 🍋🦐 ";
 // ==========================================
 
 // Mapa de imágenes locales por defecto para platos conocidos (vacío por defecto para la plantilla)
@@ -48,6 +48,7 @@ export default function App() {
   const [showSummary, setShowSummary] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedDishForPortion, setSelectedDishForPortion] = useState<Dish | null>(null);
 
   // States for Birthday Form
   const [showBirthdayForm, setShowBirthdayForm] = useState(false);
@@ -128,18 +129,43 @@ export default function App() {
 
   const cartCount = useMemo(() => cart.reduce((acc, item) => acc + item.cantidad, 0), [cart]);
 
-  const addToCart = (dish: Dish) => {
+  const addDishToCart = (nombre: string, precio: string) => {
     setCart(prev => {
-      const existing = prev.find(i => i.nombre === dish.nombre && i.precio === dish.precio);
+      const existing = prev.find(i => i.nombre === nombre && i.precio === precio);
       if (existing) {
         return prev.map(i =>
-          (i.nombre === dish.nombre && i.precio === dish.precio)
+          (i.nombre === nombre && i.precio === precio)
             ? { ...i, cantidad: i.cantidad + 1 }
             : i
         );
       }
-      return [...prev, { nombre: dish.nombre, precio: dish.precio, cantidad: 1 }];
+      return [...prev, { nombre, precio, cantidad: 1 }];
     });
+  };
+
+  const addToCart = (dish: Dish) => {
+    const prices = parseMultiplePrices(dish.precio);
+    if (prices.length > 1) {
+      setSelectedDishForPortion(dish);
+    } else {
+      addDishToCart(dish.nombre, dish.precio);
+    }
+  };
+
+  const parseMultiplePrices = (priceStr: string) => {
+    return priceStr.split(/\s+\/\s+/).map(p => p.trim());
+  };
+
+  const getPortionLabels = (numPrices: number) => {
+    return Array.from({ length: numPrices }, (_, i) => `Opción ${i + 1}`);
+  };
+
+  const formatDisplayPrice = (priceStr: string, catId: string) => {
+    const prices = parseMultiplePrices(priceStr);
+    if ((catId === 'ceviches' || catId === 'trios') && prices.length > 2) {
+      return `${prices[0]} / ${prices[prices.length - 1]}`;
+    }
+    return priceStr;
   };
 
   const updateQuantity = (nombre: string, precio: string, delta: number) => {
@@ -309,16 +335,31 @@ export default function App() {
         >
           <div className="absolute inset-0 shimmer opacity-30 mix-blend-overlay"></div>
           <Gift size={18} className="animate-bounce shrink-0" />
-          <span>¡Ponle sabor y color a tu cumpleaños! 🍓 <span className="text-yellow-100 font-black underline">Regístrate aquí</span> y llévate un batido Tutti Frutti de cortesía para celebrar de forma tropical. 🥤🎁</span>
+          <span>¡Celebra tu cumpleaños con nosotros y llévate una Leche de Tigre de cortesía para empezar el festejo! 🐟🎁 <span className="text-yellow-100 font-black underline">Regístrate aquí</span></span>
         </motion.button>
       </div>
 
       <div className="px-5 pt-4 pb-3">
-        <div className="relative w-full rounded-3xl overflow-hidden shadow-xl aspect-[2/1] bg-gradient-to-br from-primary/10 to-secondary/15 flex flex-col items-center justify-center text-center p-4 border border-dashed border-primary/20">
-          <p className="font-dish font-bold text-primary text-sm uppercase tracking-wider">
-            aca va a imagen
-          </p>
-        </div>
+        {BANNER_PATH ? (
+          <div className="relative w-full rounded-3xl overflow-hidden shadow-xl aspect-[2/1] bg-gray-100 border border-gray-100">
+            <img 
+              src={BANNER_PATH} 
+              alt="Banner Restaurante" 
+              className="w-full h-full object-cover"
+            />
+            {/* Absolute overlay gradient for readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex flex-col justify-end p-5">
+              <h2 className="font-title text-white text-[28px] drop-shadow-md leading-none">{RESTAURANTE_NAME}</h2>
+              <p className="font-slogan text-yellow-300 text-xs font-bold drop-shadow-sm tracking-wider mt-1.5 uppercase">{RESTAURANTE_SLOGAN}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="relative w-full rounded-3xl overflow-hidden shadow-xl aspect-[2/1] bg-gradient-to-br from-primary/10 to-secondary/15 flex flex-col items-center justify-center text-center p-4 border border-dashed border-primary/20">
+            <p className="font-dish font-bold text-primary text-sm uppercase tracking-wider">
+              aca va a imagen
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="px-5 py-3 overflow-x-auto no-scrollbar">
@@ -358,10 +399,22 @@ export default function App() {
                   whileHover={{ y: -4 }}
                   className="bg-white rounded-[2rem] overflow-hidden flex flex-col shadow-sm border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all duration-200"
                 >
-                  <div className="bg-primary/5 aspect-square flex items-center justify-center relative overflow-hidden p-4 border-b border-gray-100">
-                    <span className="font-dish font-bold text-[11px] text-primary uppercase tracking-wider text-center">
-                      aca va a imagen
-                    </span>
+                  <div className="bg-gradient-to-br from-primary/5 to-secondary/5 aspect-square flex flex-col items-center justify-center relative overflow-hidden p-4 border-b border-gray-100 text-center">
+                    {dish.imagen ? (
+                      <img 
+                        src={dish.imagen} 
+                        alt={dish.nombre} 
+                        className="w-full h-full object-cover absolute inset-0 cursor-pointer"
+                        onClick={() => setSelectedImage(dish.imagen!)}
+                      />
+                    ) : (
+                      <>
+                        <Utensils size={32} className="text-primary/20 mb-2 stroke-[1.5]" />
+                        <span className="font-dish text-[9px] text-primary/40 font-bold tracking-wider uppercase">
+                          BARRA D'MAGA
+                        </span>
+                      </>
+                    )}
                   </div>
                   
                   <div className="p-4 flex flex-col flex-1">
@@ -375,13 +428,13 @@ export default function App() {
                     )}
                     <div className="flex-1"></div>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="font-dish font-bold text-primary text-[16px] whitespace-nowrap">
-                        {dish.precio}
+                      <span className="font-price font-bold text-primary text-[13px] leading-tight block whitespace-normal flex-1 mr-1">
+                        {formatDisplayPrice(dish.precio, cat.id)}
                       </span>
                       <motion.button
                         whileTap={{ scale: 0.8 }}
                         onClick={() => addToCart(dish)}
-                        className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary transition-colors duration-200 shrink-0"
+                        className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary transition-colors duration-200 shrink-0 cursor-pointer"
                       >
                         <Plus size={16} strokeWidth={3} />
                       </motion.button>
@@ -399,7 +452,7 @@ export default function App() {
           <motion.button 
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowReviewForm(true)}
-            className="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md shadow-primary/20 flex items-center justify-center gap-2 mx-auto w-full"
+            className="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md shadow-primary/20 flex items-center justify-center gap-2 mx-auto w-full cursor-pointer"
           >
             <Star size={18} className="fill-white" />
             Reseña nuestra comida
@@ -407,10 +460,18 @@ export default function App() {
         </section>
 
         <footer className="mt-8 pt-8 pb-10 border-t border-gray-200 flex flex-col items-center justify-center">
-          <p className="font-title text-2xl text-primary mb-4">{RESTAURANTE_NAME}</p>
-          <div className="w-32 h-32 mb-6 rounded-2xl border border-dashed border-primary/30 bg-primary/5 flex items-center justify-center text-center p-2">
-            <span className="font-dish font-bold text-[10px] text-primary uppercase tracking-wide">aca va a imagen</span>
-          </div>
+          <p className="font-title text-2xl text-primary mb-3">{RESTAURANTE_NAME}</p>
+          {LOGO_FOOTER_PATH ? (
+            <img 
+              src={LOGO_FOOTER_PATH} 
+              alt="Logo Footer" 
+              className="w-24 h-24 mb-6 object-contain rounded-2xl"
+            />
+          ) : (
+            <div className="w-32 h-32 mb-6 rounded-2xl border border-dashed border-primary/30 bg-primary/5 flex items-center justify-center text-center p-2">
+              <span className="font-dish font-bold text-[10px] text-primary uppercase tracking-wide">aca va a imagen</span>
+            </div>
+          )}
           <p className="text-[11px] text-gray-400 font-medium">© 2026 Todos los derechos reservados.</p>
         </footer>
 
@@ -711,6 +772,67 @@ export default function App() {
                   </button>
                 </form>
               )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Slide-up Portions Selector Bottom Drawer */}
+      <AnimatePresence>
+        {selectedDishForPortion && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-end justify-center p-4 lg:p-0"
+            onClick={() => setSelectedDishForPortion(null)}
+          >
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              className="bg-white w-full max-w-md rounded-t-[3rem] p-6 max-h-[80vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-6">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest font-sans">Selecciona el tamaño</span>
+                  <h2 className="font-title text-2xl text-dark leading-none mt-1">{selectedDishForPortion.nombre}</h2>
+                </div>
+                <button
+                  onClick={() => setSelectedDishForPortion(null)}
+                  className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center cursor-pointer"
+                >
+                  <X size={20} className="text-gray-400" />
+                </button>
+              </div>
+
+              <div className="space-y-3 mb-8">
+                {parseMultiplePrices(selectedDishForPortion.precio).map((price, idx, arr) => {
+                  const labels = getPortionLabels(arr.length);
+                  const label = labels[idx];
+                  return (
+                    <motion.button
+                      key={idx}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => {
+                        addDishToCart(`${selectedDishForPortion.nombre} (${label})`, price);
+                        setSelectedDishForPortion(null);
+                      }}
+                      className="w-full bg-light border border-primary/10 hover:border-primary/30 p-4 rounded-2xl flex items-center justify-between transition-all duration-150 cursor-pointer"
+                    >
+                      <div className="text-left font-sans">
+                        <span className="font-dish font-bold text-dark text-sm block">{label}</span>
+                        <span className="text-[10px] text-gray-400 block mt-0.5">Porción individualizada</span>
+                      </div>
+                      <span className="font-price font-bold text-primary text-[18px]">
+                        {price}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+              </div>
             </motion.div>
           </motion.div>
         )}
