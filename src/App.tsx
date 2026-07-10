@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star, Copy, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { fetchSheetData, submitSheetData, SheetDish, SheetCategory, SHEET_ID } from './services/googleSheets';
 import { DEFAULT_MENU_DATA } from './data/menuData';
@@ -9,7 +9,7 @@ import { DEFAULT_MENU_DATA } from './data/menuData';
 // ==========================================
 const RESTAURANTE_NAME = "Barra Cevichera D'maga";
 const RESTAURANTE_SLOGAN = "Pescados y Mariscos";
-const WHATSAPP_NUMBER = "51900000000"; // Reemplaza con tu número de WhatsApp con código de país (ej: 51 para Perú)
+const WHATSAPP_NUMBER = "51928389012"; // Reemplaza con tu número de WhatsApp con código de país (ej: 51 para Perú)
 const FACEBOOK_URL = "";
 const MAPS_URL = "";
 const LOGO_FOOTER_PATH = "/logo.jpeg";
@@ -71,6 +71,10 @@ export default function App() {
     estrellasComida: 0,
     comentario: ''
   });
+
+  // States for Payment Method
+  const [paymentMethod, setPaymentMethod] = useState<'efectivo' | 'yape' | 'tarjeta' | null>(null);
+  const [copiedYape, setCopiedYape] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -191,12 +195,25 @@ export default function App() {
   };
 
   const sendToWhatsApp = () => {
+    if (!paymentMethod) {
+      alert("Por favor selecciona un método de pago antes de enviar tu pedido.");
+      return;
+    }
     const total = calculateTotal();
     let message = `*Hola ${RESTAURANTE_NAME}, deseo realizar un pedido:*\n\n`;
     cart.forEach(item => {
       message += `• ${item.cantidad} x ${item.nombre} (${item.precio})\n`;
     });
-    message += `\n*TOTAL: S/.${total.toFixed(2)}*`;
+    
+    const paymentLabel = {
+      'efectivo': 'Efectivo',
+      'yape': 'Yape',
+      'tarjeta': 'Tarjeta'
+    }[paymentMethod];
+
+    message += `\n*TOTAL: S/.${total.toFixed(2)}*\n`;
+    message += `*Método de Pago:* ${paymentLabel}`;
+    
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
@@ -572,6 +589,66 @@ export default function App() {
                   </div>
                 ))}
               </div>
+              <div className="border-t border-dashed border-gray-200 pt-6 mb-6">
+                <p className="text-xs font-bold text-gray-500 mb-3 uppercase tracking-wider">Método de Pago</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: 'efectivo', label: 'Efectivo', desc: 'Pago al recibir' },
+                    { id: 'yape', label: 'Yape', desc: 'Transferencia' },
+                    { id: 'tarjeta', label: 'Tarjeta', desc: 'POS / En línea' }
+                  ].map(method => (
+                    <button
+                      key={method.id}
+                      type="button"
+                      onClick={() => setPaymentMethod(method.id as any)}
+                      className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all duration-150 cursor-pointer ${
+                        paymentMethod === method.id
+                          ? 'border-primary bg-primary/5 text-primary font-semibold shadow-sm'
+                          : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                      }`}
+                    >
+                      <span className="text-xs font-bold">{method.label}</span>
+                      <span className="text-[9px] text-gray-400 mt-0.5">{method.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {paymentMethod === 'yape' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-purple-50 border border-purple-100 rounded-2xl p-4 mb-6 flex flex-col items-center justify-between gap-2"
+                >
+                  <div className="text-center">
+                    <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider">Paga con Yape</span>
+                    <p className="text-sm font-bold text-gray-700 mt-1">Número Yape: <span className="text-base text-purple-700 font-black">928 389 012</span></p>
+                    <p className="text-[10px] text-gray-500">Nombre: Barra Cevichera D'maga</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText("928389012");
+                      setCopiedYape(true);
+                      setTimeout(() => setCopiedYape(false), 2000);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-700 text-white rounded-xl text-xs font-bold hover:bg-purple-800 transition-colors cursor-pointer"
+                  >
+                    {copiedYape ? (
+                      <>
+                        <Check size={14} />
+                        <span>¡Copiado!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={14} />
+                        <span>Copiar Número</span>
+                      </>
+                    )}
+                  </button>
+                </motion.div>
+              )}
+
               <div className="border-t border-dashed border-gray-200 pt-6 mb-8">
                 <div className="flex justify-between items-center">
                   <h3 className="font-dish text-xl font-bold text-dark">Total a pagar</h3>
