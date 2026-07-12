@@ -19,7 +19,18 @@ const MARQUEE_TEXT = "🌊 SABOR A MAR DIRECTO A TU MESA • PESCADOS Y MARISCOS
 
 // Mapa de imágenes locales por defecto para platos conocidos (vacío por defecto para la plantilla)
 const LOCAL_IMAGES: Record<string, string> = {
-  // "Nombre del Plato": "nombre_imagen.jpg",
+  "Ceviches de pescado": "/ceviches_de_pescado.png",
+  "Ceviche mixto": "/ceviche_mixto.png",
+  "Ceviche de pota": "/ceviche_de_pota.png",
+  "Ceviche de conchas negras": "/ceviche_de_conchas_negras.jpg",
+  "Ceviche de pulpo": "/ceviche_de_pulpo.png",
+  "Ceviche de caballa norteño": "/ceviche_de_caballa_norteno.png",
+  "TRIO #1": "/trio_1.png",
+  "TRIO #2": "/trio_2.png",
+  "TRIO #3": "/trio_3.png",
+  "Leche de tigre + chicharrón de pota (Chica)": "/leche_de_tigre_chica.png",
+  "Leche de tigre + chicharrón de pota (Grande)": "/leche_de_tigre_grande.png",
+  "Leche de tigre especial": "/leche_de_tigre_especial.jpg"
 };
 
 interface Dish {
@@ -75,6 +86,12 @@ export default function App() {
   // States for Payment Method
   const [paymentMethod, setPaymentMethod] = useState<'efectivo' | 'yape' | 'tarjeta' | null>(null);
   const [copiedYape, setCopiedYape] = useState(false);
+
+  // States for Delivery Info
+  const [deliveryName, setDeliveryName] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [gpsLink, setGpsLink] = useState('');
+  const [isGettingGps, setIsGettingGps] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -194,7 +211,45 @@ export default function App() {
     }, 0);
   };
 
+  const getGpsLocation = () => {
+    if (!navigator.geolocation) {
+      alert("La geolocalización no es soportada por tu navegador.");
+      return;
+    }
+    setIsGettingGps(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const link = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        setGpsLink(link);
+        setIsGettingGps(false);
+      },
+      (error) => {
+        console.error(error);
+        setIsGettingGps(false);
+        alert("No se pudo obtener la ubicación. Por favor, asegúrate de activar el GPS y aceptar los permisos de ubicación con alta precisión.");
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
+      }
+    );
+  };
+
   const sendToWhatsApp = () => {
+    if (!deliveryName.trim()) {
+      alert("Por favor ingresa tu nombre para el delivery.");
+      return;
+    }
+    if (!deliveryAddress.trim()) {
+      alert("Por favor ingresa tu dirección para el delivery.");
+      return;
+    }
+    if (!gpsLink) {
+      alert("Por favor busca tu ubicación por GPS antes de enviar.");
+      return;
+    }
     if (!paymentMethod) {
       alert("Por favor selecciona un método de pago antes de enviar tu pedido.");
       return;
@@ -211,7 +266,11 @@ export default function App() {
       'tarjeta': 'Tarjeta'
     }[paymentMethod];
 
-    message += `\n*TOTAL: S/.${total.toFixed(2)}*\n`;
+    message += `\n*TOTAL: S/.${total.toFixed(2)}*\n\n`;
+    message += `*DATOS DE DELIVERY:*\n`;
+    message += `• *Nombre:* ${deliveryName}\n`;
+    message += `• *Dirección:* ${deliveryAddress}\n`;
+    message += `• *Ubicación GPS:* ${gpsLink}\n\n`;
     message += `*Método de Pago:* ${paymentLabel}`;
     
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -364,11 +423,6 @@ export default function App() {
               alt="Banner Restaurante" 
               className="w-full h-full object-cover"
             />
-            {/* Absolute overlay gradient for readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex flex-col justify-end p-5">
-              <h2 className="font-title text-white text-[28px] drop-shadow-md leading-none">{RESTAURANTE_NAME}</h2>
-              <p className="font-slogan text-yellow-300 text-xs font-bold drop-shadow-sm tracking-wider mt-1.5 uppercase">{RESTAURANTE_SLOGAN}</p>
-            </div>
           </div>
         ) : (
           <div className="relative w-full rounded-3xl overflow-hidden shadow-xl aspect-[2/1] bg-gradient-to-br from-primary/10 to-secondary/15 flex flex-col items-center justify-center text-center p-4 border border-dashed border-primary/20">
@@ -589,6 +643,69 @@ export default function App() {
                   </div>
                 ))}
               </div>
+
+              <div className="border-t border-dashed border-gray-200 pt-6 mb-6">
+                <p className="text-xs font-bold text-gray-500 mb-3 uppercase tracking-wider">Datos de Delivery</p>
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Nombre Completo</label>
+                    <input 
+                      required 
+                      type="text" 
+                      value={deliveryName} 
+                      onChange={e => setDeliveryName(e.target.value)} 
+                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50 transition-colors" 
+                      placeholder="Ej. Juan Pérez" 
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Dirección de Entrega</label>
+                    <input 
+                      required 
+                      type="text" 
+                      value={deliveryAddress} 
+                      onChange={e => setDeliveryAddress(e.target.value)} 
+                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50 transition-colors" 
+                      placeholder="Ej. Av. Larco 123, Dpto 401" 
+                    />
+                  </div>
+                  <div className="pt-1">
+                    <button
+                      type="button"
+                      onClick={getGpsLocation}
+                      disabled={isGettingGps}
+                      className={`w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border transition-all duration-150 cursor-pointer ${
+                        gpsLink 
+                          ? 'bg-green-50 border-green-200 text-green-600' 
+                          : 'bg-primary/5 border-primary/10 hover:bg-primary/10 text-primary'
+                      }`}
+                    >
+                      {isGettingGps ? (
+                        <>
+                          <Loader2 size={16} className="animate-spin" />
+                          <span>Obteniendo ubicación precisa...</span>
+                        </>
+                      ) : gpsLink ? (
+                        <>
+                          <Check size={16} />
+                          <span>Ubicación GPS Obtenida</span>
+                        </>
+                      ) : (
+                        <>
+                          <MapPin size={16} />
+                          <span>Buscar ubicación por GPS (Alta Precisión)</span>
+                        </>
+                      )}
+                    </button>
+                    {gpsLink && (
+                      <p className="text-[9px] text-green-600 mt-1 text-center font-medium">
+                        ✓ Coordenadas vinculadas con éxito
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
               <div className="border-t border-dashed border-gray-200 pt-6 mb-6">
                 <p className="text-xs font-bold text-gray-500 mb-3 uppercase tracking-wider">Método de Pago</p>
                 <div className="grid grid-cols-3 gap-2">

@@ -20,37 +20,37 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "Ceviches de pescado",
         descripcion: "Clásico ceviche peruano de pescado fresco curado en limón.",
         precio: "S/. 15.00 / S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/ceviches_de_pescado.png"
       },
       {
         nombre: "Ceviche mixto",
         descripcion: "Pescado y mariscos seleccionados curados en zumo de limón.",
         precio: "S/. 20.00 / S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/ceviche_mixto.png"
       },
       {
         nombre: "Ceviche de pota",
         descripcion: "Ceviche económico y sabroso a base de pota fresca.",
         precio: "S/. 12.00 / S/. 15.00 / S/. 20.00",
-        imagen: ""
+        imagen: "/ceviche_de_pota.png"
       },
       {
         nombre: "Ceviche de conchas negras",
         descripcion: "Potente ceviche norteño de conchas negras frescas.",
         precio: "S/. 25.00 / S/. 30.00 / S/. 35.00",
-        imagen: ""
+        imagen: "/ceviche_de_conchas_negras.jpg"
       },
       {
         nombre: "Ceviche de pulpo",
         descripcion: "Finas láminas o cortes de pulpo tierno al limón.",
         precio: "S/. 15.00 / S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/ceviche_de_pulpo.png"
       },
       {
         nombre: "Ceviche de caballa norteño",
         descripcion: "Ceviche intenso y tradicional preparado con caballa.",
         precio: "S/. 20.00 / S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/ceviche_de_caballa_norteno.png"
       }
     ]
   },
@@ -62,19 +62,19 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "TRIO #1",
         descripcion: "Ceviche de pescado + chicharrón de pota + arroz con mariscos o chaufa de mariscos",
         precio: "S/. 20.00 / S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/trio_1.png"
       },
       {
         nombre: "TRIO #2",
         descripcion: "Ceviche de pescado + chicharrón de pota + arroz con mariscos o chaufa de mariscos",
         precio: "S/. 20.00 / S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/trio_2.png"
       },
       {
         nombre: "TRIO #3",
         descripcion: "Ceviche de pescado + chicharrón de pota + arroz con mariscos o chaufa de mariscos",
         precio: "S/. 20.00 / S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/trio_3.png"
       }
     ]
   },
