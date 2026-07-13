@@ -86,19 +86,19 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "DÚO #1",
         descripcion: "Arroz o chaufa de mariscos + ceviche de pescado mixto",
         precio: "S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/duo_1.png"
       },
       {
         nombre: "DÚO #2",
         descripcion: "Arroz c/ mariscos o chaufa de mariscos + ceviche de pota",
         precio: "S/. 20.00 / S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/duo_2.png"
       },
       {
         nombre: "DÚO #3",
         descripcion: "Arroz c/ mariscos o chaufa de mariscos + ceviche de PESCADO",
         precio: "S/. 20.00 / S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/duo_3.png"
       }
     ]
   },
@@ -110,19 +110,19 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "Chilcano + chicharrón de pota",
         descripcion: "Caldo reconfortante de pescado acompañado con crujiente chicharrón de pota.",
         precio: "S/. 7.00",
-        imagen: ""
+        imagen: "/chilcano_chicharron.png"
       },
       {
         nombre: "Chilcano c/ cangrejo + chicharrón de pota",
         descripcion: "Caldo de pescado sustancioso con cangrejo, acompañado de chicharrón de pota.",
         precio: "S/. 10.00",
-        imagen: ""
+        imagen: "/chilcano_cangrejo.png"
       },
       {
         nombre: "Chilcano especial",
         descripcion: "Caldo de pescado contundente con mixtura especial.",
         precio: "S/. 15.00",
-        imagen: ""
+        imagen: "/chilcano_especial.jpg"
       }
     ]
   },
@@ -134,19 +134,19 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "Leche de tigre + chicharrón de pota (Chica)",
         descripcion: "Jugo concentrado de ceviche acompañado de chicharrón de pota crujiente (tamaño personal).",
         precio: "S/. 12.00",
-        imagen: ""
+        imagen: "/leche_de_tigre_chica.png"
       },
       {
         nombre: "Leche de tigre + chicharrón de pota (Grande)",
         descripcion: "Jugo concentrado de ceviche acompañado de chicharrón de pota crujiente (tamaño grande).",
         precio: "S/. 15.00",
-        imagen: ""
+        imagen: "/leche_de_tigre_grande.png"
       },
       {
         nombre: "Leche de tigre especial",
         descripcion: "Concentrado premium de ceviche con mixtura de mariscos.",
         precio: "S/. 20.00",
-        imagen: ""
+        imagen: "/leche_de_tigre_especial.jpg"
       }
     ]
   },
@@ -158,31 +158,31 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "Arroz con marisco cremoso",
         descripcion: "Plato a base de arroz cremoso con mixtura de mariscos.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/arroz_marisco_cremoso.png"
       },
       {
         nombre: "Arroz chaufa de marisco",
         descripcion: "Clásico arroz chaufa peruano al wok con mariscos.",
         precio: "S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/arroz_chaufa_marisco.jpg"
       },
       {
         nombre: "Arroz chaufa de pescado",
         descripcion: "Clásico arroz chaufa peruano al wok con trozos de pescado.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/arroz_chaufa_pescado.png"
       },
       {
         nombre: "Arroz chaufa de langostino",
         descripcion: "Clásico arroz chaufa peruano al wok con langostinos.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/arroz_chaufa_langostino.jpg"
       },
       {
         nombre: "Arroz con conchas negras",
         descripcion: "Arroz jugoso preparado con frescas conchas negras.",
         precio: "S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/arroz_conchas_negras.jpg"
       }
     ]
   },
@@ -194,19 +194,19 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "Jalea Piurana (personal)",
         descripcion: "Mixtura de pescados y mariscos fritos con yuca, chifles y sarsa criolla, tamaño personal.",
         precio: "S/. 25.00",
-        imagen: ""
+        imagen: "/jalea_piurana_personal.jpg"
       },
       {
         nombre: "Jalea Piurana (mediana)",
         descripcion: "Mixtura de pescados y mariscos fritos con yuca, chifles y sarsa criolla, tamaño mediano.",
         precio: "S/. 40.00",
-        imagen: ""
+        imagen: "/jalea_piurana_mediana.jpg"
       },
       {
         nombre: "Jalea Piurana (grande)",
         descripcion: "Mixtura de pescados y mariscos fritos con yuca, chifles y sarsa criolla, tamaño grande para compartir.",
         precio: "S/. 60.00",
-        imagen: ""
+        imagen: "/jalea_piurana_grande.png"
       }
     ]
   },
@@ -218,31 +218,31 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "Cabrilla frita",
         descripcion: "Pescado entero cabrilla frito, acompañado de guarnición.",
         precio: "S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/cabrilla_frita.png"
       },
       {
         nombre: "Tilapia frita",
         descripcion: "Pescado entero tilapia frito, acompañado de guarnición.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/tilapia_frita.png"
       },
       {
         nombre: "Doncella frita",
         descripcion: "Pescado doncella frito, acompañado de guarnición.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/doncella_frita.png"
       },
       {
         nombre: "Trucha frita",
         descripcion: "Trucha entera frita, acompañada de guarnición.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/trucha_frita.png"
       },
       {
         nombre: "Filete de pescado frito",
         descripcion: "Corte de filete de pescado frito, sin espinas.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/filete_frito.png"
       }
     ]
   },
@@ -254,25 +254,25 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "Sudado de cabrilla",
         descripcion: "Caldo concentrado a base de tomate, cebolla y cabrilla entera.",
         precio: "S/. 30.00 / S/. 35.00",
-        imagen: ""
+        imagen: "/sudado_cabrilla.jpg"
       },
       {
         nombre: "Sudado de trambollo",
         descripcion: "Caldo concentrado tradicional con trambollo entero.",
         precio: "S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/sudado_trambollo.jpg"
       },
       {
         nombre: "Sudado de filete",
         descripcion: "Caldo concentrado peruano preparado con filete de pescado.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/sudado_filete.png"
       },
       {
         nombre: "Sudado de Doncella",
         descripcion: "Caldo concentrado preparado con pescado doncella.",
         precio: "S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/sudado_doncella.jpg"
       }
     ]
   },
@@ -284,25 +284,25 @@ export const DEFAULT_MENU_DATA: Category[] = [
         nombre: "Parihuela de cabrilla",
         descripcion: "Contundente sopa de mariscos y pescado cabrilla con un toque de ají.",
         precio: "S/. 30.00 / S/. 35.00",
-        imagen: ""
+        imagen: "/parihuela_cabrilla.jpg"
       },
       {
         nombre: "Parihuela de tramboyo",
         descripcion: "Sopa vigorizante de mariscos y pescado trambollo.",
         precio: "S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/parihuela_tramboyo.jpg"
       },
       {
         nombre: "Parihuela de filete",
         descripcion: "Sopa marinera concentrada servida con filete de pescado.",
         precio: "S/. 20.00 / S/. 25.00",
-        imagen: ""
+        imagen: "/parihuela_filete.png"
       },
       {
         nombre: "Parihuela de Doncella",
         descripcion: "Concentrado de mariscos y pescado doncella.",
         precio: "S/. 25.00 / S/. 30.00",
-        imagen: ""
+        imagen: "/parihuela_doncella.jpg"
       }
     ]
   }
