@@ -17,33 +17,33 @@ export const DEFAULT_MENU_DATA: Category[] = [
     nombre: "Ceviches",
     items: [
       {
-        nombre: "Ceviches de pescado",
-        descripcion: "Clásico ceviche peruano de pescado fresco curado en limón.",
-        precio: "S/. 15.00 / S/. 20.00 / S/. 25.00",
+        nombre: "Ceviche de pescado",
+        descripcion: "Pescado fresco marinado en limón y ají limo, acompañado de camote, choclo, cancha y abundante leche de tigre.",
+        precio: "S/. 18.00",
         imagen: "/ceviches_de_pescado.png"
       },
       {
         nombre: "Ceviche mixto",
-        descripcion: "Pescado y mariscos seleccionados curados en zumo de limón.",
-        precio: "S/. 20.00 / S/. 25.00 / S/. 30.00",
+        descripcion: "La más selectiva variedad de mariscos frescos (calamar, langostinos, conchas de abanico, etc.).",
+        precio: "S/. 23.00",
         imagen: "/ceviche_mixto.png"
       },
       {
-        nombre: "Ceviche de pota",
-        descripcion: "Ceviche económico y sabroso a base de pota fresca.",
-        precio: "S/. 12.00 / S/. 15.00 / S/. 20.00",
-        imagen: "/ceviche_de_pota.png"
-      },
-      {
         nombre: "Ceviche de conchas negras",
-        descripcion: "Potente ceviche norteño de conchas negras frescas.",
-        precio: "S/. 25.00 / S/. 30.00 / S/. 35.00",
+        descripcion: "Conchas negras marinado en limón y ají limo acompañado de camote, choclo, cancha y chicharrón de pota.",
+        precio: "S/. 30.00",
         imagen: "/ceviche_de_conchas_negras.jpg"
       },
       {
+        nombre: "Ceviche de pota",
+        descripcion: "Pota fresca marinado en limón y ají limos acompañado de camote, choclo, cancha y chicharrón de pota.",
+        precio: "S/. 15.00",
+        imagen: "/ceviche_de_pota.png"
+      },
+      {
         nombre: "Ceviche de pulpo",
-        descripcion: "Finas láminas o cortes de pulpo tierno al limón.",
-        precio: "S/. 15.00 / S/. 20.00 / S/. 25.00",
+        descripcion: "Pulpo fresco cortada en finas láminas acompañado de camote, choclo, cancha y abundante leche de tigre.",
+        precio: "S/. 20.00",
         imagen: "/ceviche_de_pulpo.png"
       },
       {
@@ -303,6 +303,114 @@ export const DEFAULT_MENU_DATA: Category[] = [
         descripcion: "Concentrado de mariscos y pescado doncella.",
         precio: "S/. 25.00 / S/. 30.00",
         imagen: "/parihuela_doncella.jpg"
+      }
+    ]
+  },
+  {
+    id: "fuentes",
+    nombre: "Fuentes",
+    items: [
+      {
+        nombre: "Ceviche de pescado (Fuente)",
+        descripcion: "Deliciosa fuente de ceviche de pescado fresco, ideal para compartir.",
+        precio: "S/. 50.00 / S/. 70.00 / S/. 100.00",
+        imagen: "/fuente_ceviche_pescado.png"
+      },
+      {
+        nombre: "Ceviche mixto (Fuente)",
+        descripcion: "Generosa fuente de ceviche de pescado y mariscos seleccionados.",
+        precio: "S/. 60.00 / S/. 80.00 / S/. 120.00",
+        imagen: "/fuente_ceviche_mixto.png"
+      },
+      {
+        nombre: "Chicharrón de pescado (Fuente)",
+        descripcion: "Crocantes trozos de pescado frito en fuente, perfecto para el grupo.",
+        precio: "S/. 50.00 / S/. 70.00 / S/. 100.00",
+        imagen: "/fuente_chicharron_pescado.png"
+      },
+      {
+        nombre: "Jalea mixta (Fuente)",
+        descripcion: "Tradicional jalea piurana con mixtura de mariscos y pescados crocantes.",
+        precio: "S/. 50.00 / S/. 70.00 / S/. 100.00",
+        imagen: "/fuente_jalea_mixta.png"
+      },
+      {
+        nombre: "Arroz con mariscos (Fuente)",
+        descripcion: "Arroz sazonado con mixtura de mariscos frescos en fuente familiar.",
+        precio: "S/. 65.00 / S/. 120.00",
+        imagen: "/fuente_arroz_mariscos.png"
+      }
+    ]
+  },
+  {
+    id: "porciones",
+    nombre: "Porciones",
+    items: [
+      {
+        nombre: "Chicharrón de pota",
+        descripcion: "Porción de crujiente chicharrón de pota.",
+        precio: "S/. 5.00",
+        imagen: "/porcion_chicharron_pota.png"
+      },
+      {
+        nombre: "Yuca frita",
+        descripcion: "Porción de yucas doradas and crujientes.",
+        precio: "S/. 5.00",
+        imagen: "/porcion_yuca_frita.png"
+      },
+      {
+        nombre: "Chifles",
+        descripcion: "Porción de plátanos verdes fritos en rodajas delgadas.",
+        precio: "S/. 3.00",
+        imagen: "/porcion_chifles.png"
+      },
+      {
+        nombre: "Arroz blanco",
+        descripcion: "Porción de arroz blanco cocido.",
+        precio: "S/. 5.00",
+        imagen: "/porcion_arroz_blanco.png"
+      },
+      {
+        nombre: "Salsa criolla",
+        descripcion: "Porción de salsa criolla de cebolla, limón y ají.",
+        precio: "S/. 3.00",
+        imagen: "/porcion_salsa_criolla.png"
+      },
+      {
+        nombre: "Choclo",
+        descripcion: "Porción de choclo desgranado tierno.",
+        precio: "S/. 3.00",
+        imagen: "/porcion_choclo.png"
+      },
+      {
+        nombre: "Camote",
+        descripcion: "Porción de camote cocido dulce.",
+        precio: "S/. 3.00",
+        imagen: "/porcion_camote.png"
+      },
+      {
+        nombre: "Cangrejo",
+        descripcion: "Porción de cangrejo fresco.",
+        precio: "S/. 3.00",
+        imagen: "/porcion_cangrejo.png"
+      }
+    ]
+  },
+  {
+    id: "bebidas-naturales-clasicas",
+    nombre: "Bebidas Naturales Clásicas",
+    items: [
+      {
+        nombre: "Chicha Morada",
+        descripcion: "Refrescante bebida tradicional a base de maíz morado.",
+        precio: "S/. 6.00 / S/. 12.00",
+        imagen: "/bebida_chicha_morada.png"
+      },
+      {
+        nombre: "Maracuyá",
+        descripcion: "Deliciosa y refrescante bebida de pura maracuyá.",
+        precio: "S/. 6.00 / S/. 12.00",
+        imagen: "/bebida_maracuya.png"
       }
     ]
   }

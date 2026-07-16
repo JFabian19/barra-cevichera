@@ -117,18 +117,25 @@ export default function App() {
           return;
         }
 
-        const formattedCategories: Category[] = cats.map(c => ({
-          id: c.nombre.toLowerCase().replace(/\s+/g, '-'),
-          nombre: c.nombre,
-          items: dishes
-            .filter(d => d.categoría === c.nombre)
-            .map(d => ({
-              nombre: d['nombre del plato'],
-              descripcion: d.descripción,
-              precio: d.precio,
-              imagen: LOCAL_IMAGES[d['nombre del plato']] || d['URL de imagen'] || null
-            }))
-        }));
+        const formattedCategories: Category[] = cats.map(c => {
+          const catNombre = c.Nombre || '';
+          return {
+            id: catNombre.toLowerCase().replace(/\s+/g, '-'),
+            nombre: catNombre,
+            items: dishes
+              .filter(d => d.Categoría === catNombre)
+              .map(d => {
+                const prices = [d['Precio 1'], d['Precio 2'], d['Precio 3']].filter(p => p && p.trim() !== '');
+                const precioCombined = prices.join(' / ');
+                return {
+                  nombre: d['Nombre del plato'],
+                  descripcion: d.Descripción,
+                  precio: precioCombined,
+                  imagen: LOCAL_IMAGES[d['Nombre del plato']] || d['Imagen URL'] || null
+                };
+              })
+          };
+        });
 
         setCategories(formattedCategories);
         if (formattedCategories.length > 0) {
@@ -177,13 +184,41 @@ export default function App() {
     return priceStr.split(/\s+\/\s+/).map(p => p.trim());
   };
 
-  const getPortionLabels = (numPrices: number) => {
+  const getDishCategoryId = (dishName: string) => {
+    for (const cat of categories) {
+      if (cat.items.some(item => item.nombre === dishName)) {
+        return cat.id;
+      }
+    }
+    return '';
+  };
+
+  const getPortionLabels = (numPrices: number, dishName: string) => {
+    const nameLower = dishName.toLowerCase();
+    const catId = getDishCategoryId(dishName);
+    const catLower = catId.toLowerCase();
+    if (catLower === 'bebidas-naturales-clasicas' || nameLower.includes('chicha') || nameLower.includes('maracuyá')) {
+      return ["1/2 Litro", "1 Litro"];
+    }
+    if (catLower === 'fuentes') {
+      if (numPrices === 3) {
+        return ["Pequeño", "Mediano (3 per)", "Familiar (5 per)"];
+      }
+      if (numPrices === 2) {
+        return ["Mediano (3 per)", "Familiar (5 per)"];
+      }
+    }
+    if (numPrices === 2) return ["Mediana", "Familiar"];
+    if (numPrices === 3) return ["Chica", "Mediana", "Familiar"];
     return Array.from({ length: numPrices }, (_, i) => `Opción ${i + 1}`);
   };
 
   const formatDisplayPrice = (priceStr: string, catId: string) => {
     const prices = parseMultiplePrices(priceStr);
-    if ((catId === 'ceviches' || catId === 'trios') && prices.length > 2) {
+    if (catId.toLowerCase() === 'fuentes') {
+      return priceStr;
+    }
+    if (prices.length > 2) {
       return `${prices[0]} / ${prices[prices.length - 1]}`;
     }
     return priceStr;
@@ -286,7 +321,7 @@ export default function App() {
   const handleBirthdaySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingBirthday(true);
-    const success = await submitSheetData('Cumpleaños', {
+    const success = await submitSheetData('Fidelización', {
       timestamp: new Date().toLocaleString('es-PE'),
       nombre: birthdayData.nombre,
       telefono: birthdayData.telefono,
@@ -493,7 +528,7 @@ export default function App() {
                       {dish.nombre}
                     </h4>
                     {dish.descripcion && (
-                      <p className="text-[10px] text-gray-400 leading-tight mb-2 line-clamp-3">
+                      <p className="text-[10px] text-gray-400 leading-tight mb-2">
                         {dish.descripcion}
                       </p>
                     )}
@@ -1003,7 +1038,7 @@ export default function App() {
 
               <div className="space-y-3 mb-8">
                 {parseMultiplePrices(selectedDishForPortion.precio).map((price, idx, arr) => {
-                  const labels = getPortionLabels(arr.length);
+                  const labels = getPortionLabels(arr.length, selectedDishForPortion.nombre);
                   const label = labels[idx];
                   return (
                     <motion.button
